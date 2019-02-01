@@ -1,5 +1,7 @@
 # Generated files
 nimcache/
+*.html
+htmldocs/
 
 # Test executables
 main
