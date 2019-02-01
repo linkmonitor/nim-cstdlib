@@ -1,1 +1,5 @@
+# Generated files
 nimcache/
+
+# Test executables
+main
