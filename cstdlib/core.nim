@@ -1,9 +1,13 @@
+## All modules must import and export this module.
+##
+## TODO: Explain why.
+
 type
-  ## The root type used to access all C variables/functions/defines.
-  ##
-  ## TODO(jj): Provide examples to show why this type exists.
   C* = object
+    ## The root type used to access all C variables/functions/defines.
+    ##
+    ## TODO: Provide examples to show why this type exists.
     stdio:Stdio
 
-  ## TODO(jj): Explain why Stdio isn't public.
   Stdio = object
+    ## TODO: Explain why Stdio isn't public.
