@@ -7,8 +7,11 @@
 --passC:"-fdata-sections"
 --passC:"-ffunction-sections"
 --passC:"-flto"
---passL:"-Wl,--gc-sections"
 --passL:"-flto"
+when defined(clang):
+  --passL:"-dead-strip"
+else:
+  --passL:"-Wl,--gc-sections"
 
 # Reduce spew
 --define:verbosity:0
