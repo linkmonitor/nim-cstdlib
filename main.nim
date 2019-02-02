@@ -11,73 +11,83 @@ type
     ## TODO: Find a way to avoid this.
 
 proc main =
-  var a = C.stdio.fopen("main.nim", "r")
-  var b = C.stdio.freopen("main.nim", "r", a)
-  C.stdio.fflush(b)
-  C.stdio.setbuf(b, nil)
-  C.stdio.setvbuf(b, nil, C.stdio.IOFBF, 0)
-  C.stdio.setvbuf(b, nil, C.stdio.IOLBF, 0)
-  C.stdio.setvbuf(b, nil, C.stdio.IONBF, 0)
-  C.stdio.fwide(b, 0)
-  C.stdio.fclose(b)
+  block:
+    var a = C.stdio.fopen("main.nim", "r")
+    var b = C.stdio.freopen("main.nim", "r", a)
+    C.stdio.fflush(b)
+    C.stdio.setbuf(b, nil)
+    C.stdio.setvbuf(b, nil, C.stdio.IOFBF, 0)
+    C.stdio.setvbuf(b, nil, C.stdio.IOLBF, 0)
+    C.stdio.setvbuf(b, nil, C.stdio.IONBF, 0)
+    C.stdio.fwide(b, 0)
+    C.stdio.fclose(b)
 
-  var c:ptr[FILE]
-  discard c
+  block:
+    var c:ptr[FILE]
+    discard c
 
-  var d = C.stdio.fopen("main.nim", "r")
-  var e:array[3,int]
-  C.stdio.fread(addr(e[0]), sizeof(int), len(e), d)
-  C.stdio.fclose(d)
+  block:
+    var a = C.stdio.fopen("main.nim", "r")
+    var b:array[3,int]
+    C.stdio.fread(addr(b[0]), sizeof(int), len(b), a)
+    C.stdio.fclose(a)
 
-  var f = C.stdio.fopen("fwrite.tmp", "w+")
-  var g:array[3,int] = [1,2,3]
-  C.stdio.fwrite(addr(g[0]), sizeof(int), len(g), f)
-  C.stdio.fclose(f)
+  block:
+    var a = C.stdio.fopen("fwrite.tmp", "w+")
+    var b:array[3,int] = [1,2,3]
+    C.stdio.fwrite(addr(b[0]), sizeof(int), len(b), a)
+    C.stdio.fclose(a)
 
-  var h = C.stdio.fopen("main.nim", "r")
-  var i = C.stdio.fgetc(h)
-  var j = C.stdio.getc(h)
-  discard i
-  discard j
-  C.stdio.fclose(h)
+  block:
+    var a = C.stdio.fopen("main.nim", "r")
+    var b = C.stdio.fgetc(a)
+    var c = C.stdio.getc(a)
+    discard b
+    discard c
+    C.stdio.fclose(a)
 
-  var k:C.wchar.wint_t
-  discard k
+  block:
+    var a:C.wchar.wint_t
+    discard a
 
-  var l = C.stdio.fopen("main.nim", "r")
-  var m = C.wchar.fgetwc(l)
-  var n = C.wchar.getwc(l)
-  discard m
-  discard n
-  C.stdio.fclose(l)
+  block:
+    var a = C.stdio.fopen("main.nim", "r")
+    var b = C.wchar.fgetwc(a)
+    var c = C.wchar.getwc(a)
+    discard b
+    discard c
+    C.stdio.fclose(a)
 
-  var o = C.stdio.fopen("main.nim", "r")
-  var p:array[4,char]
-  C.stdio.fgets(p, len(p), o)
-  var q:array[4,C.wchar.wint_t]
-  C.wchar.fgetws(q, len(q), o)
-  C.stdio.fclose(o)
+  block:
+    var a = C.stdio.fopen("main.nim", "r")
+    var b:array[4,char]
+    C.stdio.fgets(b, len(b), a)
+    var c:array[4,C.wchar.wint_t]
+    C.wchar.fgetws(c, len(c), a)
+    C.stdio.fclose(a)
 
-  var s = C.stdio.fopen("fputc.tmp", "w+");
-  C.stdio.fputc('a', s)
-  C.stdio.putc('b', s)
-  C.wchar.fputwc('c', s)
-  C.wchar.putwc('d', s)
-  C.stdio.fputs("dcba", s)
-  var t:array[2,C.wchar.wchar_t]
-  t[0] = 'a'
-  t[1] = '\0'
-  C.wchar.fputws(t, s)
-  C.stdio.fclose(s)
+  block:
+    var a = C.stdio.fopen("fputc.tmp", "w+");
+    C.stdio.fputc('a', a)
+    C.stdio.putc('b', a)
+    C.wchar.fputwc('c', a)
+    C.wchar.putwc('d', a)
+    C.stdio.fputs("dcba", a)
+    var b:array[2,C.wchar.wchar_t]
+    b[0] = 'a'
+    b[1] = '\0'
+    C.wchar.fputws(b, a)
+    C.stdio.fclose(a)
 
-  when defined(interactive):
-    # NOTE: Use Ctrl-d to avoid putting a newline in `stdin`.
-    C.stdio.printf("Enter a charcter:\n")
-    var u = C.stdio.getchar()
-    C.stdio.printf("You entered %c\n", u)
-    C.stdio.printf("Enter a charcter:\n")
-    var v = C.wchar.getwchar()
-    C.stdio.printf("You entered %c\n", v)
+  block:
+    when defined(interactive):
+      # NOTE: Use Ctrl-d to avoid putting a newline in `stdin`.
+      C.stdio.printf("Enter a charcter:\n")
+      var a = C.stdio.getchar()
+      C.stdio.printf("You entered %c\n", a)
+      C.stdio.printf("Enter a charcter:\n")
+      var b = C.wchar.getwchar()
+      C.stdio.printf("You entered %c\n", b)
 
   C.stdio.putchar('a')
   C.stdio.putchar('\n')
@@ -85,20 +95,22 @@ proc main =
   C.wchar.putwchar('\n')
   C.stdio.puts("ab")
 
-  var w = C.stdio.fopen("ungetc.tmp", "w+")
-  C.stdio.ungetc('a', w)
-  var x = C.stdio.fgetc(w)
-  C.stdio.printf("%c\n", x)
-  C.wchar.ungetwc('b', w)
-  var y = C.wchar.fgetwc(w)
-  C.stdio.printf("%c\n", y)
-  C.stdio.fclose(w)
+  block:
+    var a = C.stdio.fopen("ungetc.tmp", "w+")
+    C.stdio.ungetc('a', a)
+    var b = C.stdio.fgetc(a)
+    C.stdio.printf("%c\n", b)
+    C.wchar.ungetwc('b', a)
+    var c = C.wchar.fgetwc(a)
+    C.stdio.printf("%c\n", c)
+    C.stdio.fclose(a)
 
-  when defined(interactive):
-    C.stdio.printf("Enter an integer:\n")
-    var z:int
-    C.stdio.scanf("%d", addr(z))
-    C.stdio.printf("You entered: %d\n", z)
+  block:
+    when defined(interactive):
+      C.stdio.printf("Enter an integer:\n")
+      var a:int
+      C.stdio.scanf("%d", addr(a))
+      C.stdio.printf("You entered: %d\n", a)
 
   C.stdio.printf("Hello, World!\n")
 
