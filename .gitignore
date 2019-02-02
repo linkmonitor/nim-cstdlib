@@ -5,3 +5,6 @@ htmldocs/
 
 # Test executables
 main
+
+# Temporary files
+*.tmp

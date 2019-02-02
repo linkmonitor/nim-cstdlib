@@ -92,6 +92,22 @@ proc fwide*(typ:type C.stdio, stream:ptr[C.stdio.FILE], mode:int):int {.
   .}
 
 #
+# Direct input/output functions
+#
+
+proc fread*(typ:type C.stdio, buffer:pointer, size:csize, count:csize, stream:ptr[C.stdio.FILE]):csize {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fwrite*(typ:type C.stdio, buffer:pointer, size:csize, count:csize, stream:ptr[C.stdio.FILE]):csize {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+#
 # Formatted input/output functions
 #
 

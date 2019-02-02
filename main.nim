@@ -22,6 +22,16 @@ proc main =
   var c:ptr[FILE]
   discard c
 
+  var d = C.stdio.fopen("main.nim", "r")
+  var e:array[3,int]
+  C.stdio.fread(addr(e[0]), sizeof(int), len(e), d)
+  C.stdio.fclose(d)
+
+  var f = C.stdio.fopen("fwrite.tmp", "w+")
+  var g:array[3,int] = [1,2,3]
+  C.stdio.fwrite(addr(g[0]), sizeof(int), len(g), f)
+  C.stdio.fclose(f)
+
   C.stdio.printf("Hello, World!\n")
 
 main()
