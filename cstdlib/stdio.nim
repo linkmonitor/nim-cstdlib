@@ -181,6 +181,13 @@ proc ungetc*(typ:type C.stdio, ch:int, stream:ptr[C.stdio.FILE]):int {.
 # Formatted input/output functions
 #
 
+proc scanf*(typ:type C.stdio, format:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  varargs,
+  discardable,
+  .}
+
 proc printf*(typ:type C.stdio, fmt:cstring):int {.
   importc,
   header:"<stdio.h>",

@@ -87,12 +87,18 @@ proc main =
 
   var w = C.stdio.fopen("ungetc.tmp", "w+")
   C.stdio.ungetc('a', w)
-  var v = C.stdio.fgetc(w)
-  C.stdio.printf("%c\n", v)
-  C.wchar.ungetwc('b', w)
-  var x = C.wchar.fgetwc(w)
+  var x = C.stdio.fgetc(w)
   C.stdio.printf("%c\n", x)
+  C.wchar.ungetwc('b', w)
+  var y = C.wchar.fgetwc(w)
+  C.stdio.printf("%c\n", y)
   C.stdio.fclose(w)
+
+  when defined(interactive):
+    C.stdio.printf("Enter an integer:\n")
+    var z:int
+    C.stdio.scanf("%d", addr(z))
+    C.stdio.printf("You entered: %d\n", z)
 
   C.stdio.printf("Hello, World!\n")
 
