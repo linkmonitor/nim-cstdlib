@@ -1,6 +1,12 @@
 import core
 export core
 
+converter toPointer*[N,T](arr:array[N,T]):ptr[T] {.inline.} =
+  cast[ptr[T]](unsafeAddr(arr[0]))
+
+converter toInt*(n:char):int {.inline.} =
+  result = cast[int](n)
+
 #
 # Types
 #
@@ -102,6 +108,70 @@ proc fread*(typ:type C.stdio, buffer:pointer, size:csize, count:csize, stream:pt
   .}
 
 proc fwrite*(typ:type C.stdio, buffer:pointer, size:csize, count:csize, stream:ptr[C.stdio.FILE]):csize {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+#
+# Unformatted input/output functions
+#
+
+proc fgetc*(typ:type C.stdio, stream:ptr[C.stdio.FILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc getc*(typ:type C.stdio, stream:ptr[C.stdio.FILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fgets*[T](typ:type C.stdio, str:ptr[T], count:int, stream:ptr[C.stdio.FILE]):ptr[T] {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fputc*(typ:type C.stdio, ch:int, stream:ptr[C.stdio.FILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc putc*(typ:type C.stdio, ch:int, stream:ptr[C.stdio.FILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fputs*(typ:type C.stdio, str:cstring, stream:ptr[C.stdio.FILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc getchar*(typ:type C.stdio):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc putchar*(typ:type C.stdio, ch:int):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc puts*(typ:type C.stdio, st:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc ungetc*(typ:type C.stdio, ch:int, stream:ptr[C.stdio.FILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,

@@ -8,6 +8,9 @@ type
     ##
     ## TODO: Provide examples to show why this type exists.
     stdio*:Stdio
+    wchar*:Wchar
 
   Stdio = object
     ## TODO: Explain why Stdio isn't public.
+
+  Wchar = object
