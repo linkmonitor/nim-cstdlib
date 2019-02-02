@@ -195,9 +195,48 @@ proc fscanf*(typ:type C.stdio, stream:ptr[C.stdio.FILE], format:cstring):int {.
   discardable,
   .}
 
-proc printf*(typ:type C.stdio, fmt:cstring):int {.
+proc sscanf*(typ:type C.stdio, buffer:pointer, format:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  varargs,
+  discardable,
+  .}
+
+# TODO: Implement
+#
+# - vscanf()
+# - vfscanf()
+# - vsscanf()
+
+proc printf*(typ:type C.stdio, format:cstring):int {.
   importc,
   header:"<stdio.h>",
   discardable,
+  varargs,
+  .}
+
+proc fprintf*(typ:type C.stdio, stream:ptr[C.stdio.FILE], format:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  varargs,
+  .}
+
+proc sprintf*(typ:type C.stdio, buffer:pointer, format:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  varargs,
+  .}
+
+# TODO: Implement
+#
+# - vprintf()
+# - vfprintf()
+# - vsprintf()
+
+proc perror*(typ:type C.stdio, s:cstring) {.
+  importc,
+  header:"<stdio.h>",
   varargs,
   .}

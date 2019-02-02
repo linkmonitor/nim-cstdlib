@@ -1,5 +1,7 @@
 ## Tests for `cstdlib`
 
+import system
+
 # NOTE: Can import everything at once with `import cstdlib`.
 import cstdlib/[
   stdio,
@@ -122,6 +124,85 @@ proc main =
     C.stdio.printf("fscanf() read %d\n", b)
     C.stdio.fclose(a)
 
-  C.stdio.printf("Hello, World!\n")
+  block:
+    var a:cstring = "321"
+    var b:int
+    C.stdio.sscanf(a, "%d", addr(b))
+    C.stdio.printf("sscanf() read %d\n", b)
+
+  block:
+    when defined(interactive):
+      C.stdio.printf("Enter an integer:\n")
+      var a:int
+      # NOTE: May need a few of these to get it to work.
+      # C.stdio.getchar()
+      # C.stdio.getchar()
+      var format:array[3, C.wchar.wchar_t]
+      format[0] = '%'
+      format[1] = 'd'
+      format[2] = '\0'
+      C.wchar.wscanf(format, addr(a))
+      C.stdio.printf("You entered: %d\n", a)
+
+  block:
+    var a = C.stdio.fopen("fwscanf.tmp", "w+")
+    C.stdio.fputs("246", a)
+    C.stdio.fclose(a)
+    var b:int
+    var format:array[3, C.wchar.wchar_t]
+    format[0] = '%'
+    format[1] = 'd'
+    format[2] = '\0'
+    a = C.stdio.fopen("fwscanf.tmp", "r")
+    C.wchar.fwscanf(a, format, addr(b))
+    C.stdio.printf("fwscanf() read %d\n", b)
+    C.stdio.fclose(a)
+
+  block:
+    var a:array[4,C.wchar.wchar_t] = [
+      toWchar('1'),'2','3','\0']
+    var format:array[3, C.wchar.wchar_t]
+    format[0] = '%'
+    format[1] = 'd'
+    format[2] = '\0'
+    var c:int
+    # TODO: Make `swscanf()` accept `wchar_t` buffers.
+    C.wchar.swscanf(addr(a), format, addr(c))
+    C.stdio.printf("swcanf() read %d\n", c)
+
+  block:
+    C.stdio.printf("Hello from printf()\n")
+    var a:array[23,C.wchar.wchar_t] = [
+      toWchar('H'), 'e', 'l', 'l', 'o', ',', ' ',
+      'f', 'r', 'o', 'm', ' ',
+      'w', 'p', 'r', 'i', 'n', 't', 'f', '(', ')', '\n', '\0' ]
+    C.wchar.wprintf(a)
+
+  block:
+    var a = C.stdio.fopen("fwprintf.tmp", "w")
+    var format:array[3, C.wchar.wchar_t] = [toWchar('%'), 'd', '\0']
+    C.wchar.fwprintf(a, format, 1)
+    C.stdio.fclose(a)
+
+  block:
+    var a:array[5, C.wchar.wchar_t]
+    var format:array[3, C.wchar.wchar_t] = [toWchar('%'), 'd', '\0']
+    C.wchar.swprintf(addr(a), len(a), format, 135)
+    a[3] = '\n'
+    a[4] = '\0'
+    C.wchar.wprintf(a)
+
+  block:
+    var a = C.stdio.fopen("fprintf.tmp", "w")
+    C.stdio.fprintf(a, "%d\n", 789)
+    C.stdio.fclose(a)
+
+  block:
+    var a:array[100, char]
+    C.stdio.sprintf(addr(a), "%d", 987)
+    C.stdio.printf("%c%c%c\n", a[0], a[1], a[2])
+
+  block:
+    C.stdio.perror("Hello from perror()")
 
 main()

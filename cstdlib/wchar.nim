@@ -2,6 +2,11 @@ import stdio
 
 import core
 export core
+
+# TODO: This is an aggressive way to make WideCString available.
+import system
+export system
+
 #
 # Local type aliases
 #
@@ -95,3 +100,61 @@ proc ungetwc*(typ:type C.wchar, ch:C.wchar.wint_t, stream:ptr[FILE]):C.wchar.win
   header:"<wchar.h>",
   discardable,
   .}
+
+#
+# Formatted input/output functions
+#
+
+proc wscanf*(typ:type C.wchar, format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+proc fwscanf*(typ:type C.wchar, stream:ptr[FILE], format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+proc swscanf*(typ:type C.wchar, buffer:pointer, format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+# TODO: Implement
+#
+# - vscanf()
+# - vfscanf()
+# - vsscanf()
+
+proc wprintf*(typ:type C.wchar, format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+proc fwprintf*(typ:type C.wchar, stream:ptr[FILE], format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+proc swprintf*(typ:type C.wchar, buffer:pointer, bufsz:csize, format:ptr[C.wchar.wchar_t]):int {.
+  importc,
+  header:"<wchar.h>",
+  varargs,
+  discardable,
+  .}
+
+# TODO: Implement
+#
+# - vwprintf()
+# - vfwprintf()
+# - vswprintf()
