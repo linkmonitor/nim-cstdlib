@@ -188,6 +188,13 @@ proc scanf*(typ:type C.stdio, format:cstring):int {.
   discardable,
   .}
 
+proc fscanf*(typ:type C.stdio, stream:ptr[C.stdio.FILE], format:cstring):int {.
+  importc,
+  header:"<stdio.h>",
+  varargs,
+  discardable,
+  .}
+
 proc printf*(typ:type C.stdio, fmt:cstring):int {.
   importc,
   header:"<stdio.h>",

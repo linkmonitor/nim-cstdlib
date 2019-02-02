@@ -112,6 +112,16 @@ proc main =
       C.stdio.scanf("%d", addr(a))
       C.stdio.printf("You entered: %d\n", a)
 
+  block:
+    var a = C.stdio.fopen("fscanf.tmp", "w+")
+    C.stdio.fputs("123", a)
+    C.stdio.fclose(a)
+    a = C.stdio.fopen("fscanf.tmp", "r")
+    var b:int
+    C.stdio.fscanf(a, "%d", addr(b))
+    C.stdio.printf("fscanf() read %d\n", b)
+    C.stdio.fclose(a)
+
   C.stdio.printf("Hello, World!\n")
 
 main()
