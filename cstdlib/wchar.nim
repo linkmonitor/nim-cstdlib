@@ -12,7 +12,7 @@ export system
 #
 
 type
-  FILE = stdio.FILE(C.stdio)
+  FILE = stdio.FILE(C)
     ## TODO: Find a way to avoid this.
 
 #
@@ -23,10 +23,10 @@ type
   wint_t_private {.importc:"wint_t", header:"<wchar.h>".} = object
   wchar_t_private {.importc:"wchar_t", header:"<wchar.h>".} = object
 
-template wint_t*(typ:type C.wchar):typedesc =
+template wint_t*(typ:type C):typedesc =
   wint_t_private
 
-template wchar_t*(typ:type C.wchar):typedesc =
+template wchar_t*(typ:type C):typedesc =
   wchar_t_private
 
 #
@@ -36,66 +36,66 @@ template wchar_t*(typ:type C.wchar):typedesc =
 converter toPointer*[N,T](arr:array[N,T]):ptr[T] {.inline.} =
   cast[ptr[T]](unsafeAddr(arr[0]))
 
-converter toWint*(n:char):C.wchar.wint_t {.inline.} =
-  cast[C.wchar.wint_t](n)
+converter toWint*(n:char):C.wint_t {.inline.} =
+  cast[C.wint_t](n)
 
-converter toWchar*(n:char):C.wchar.wchar_t{.inline.} =
-  cast[C.wchar.wchar_t](n)
+converter toWchar*(n:char):C.wchar_t{.inline.} =
+  cast[C.wchar_t](n)
 
 #
 # Unformatted input/output functions
 #
 
-proc fgetwc*(typ:type C.wchar, stream:ptr[FILE]):C.wchar.wint_t {.
+proc fgetwc*(typ:type C, stream:ptr[FILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc getwc*(typ:type C.wchar, stream:ptr[FILE]):C.wchar.wint_t {.
+proc getwc*(typ:type C, stream:ptr[FILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
 
-proc fgetws*[T](typ:type C.wchar, str:ptr[T], count:int, stream:ptr[FILE]):ptr[T] {.
+proc fgetws*[T](typ:type C, str:ptr[T], count:int, stream:ptr[FILE]):ptr[T] {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc fputwc*(typ:type C.wchar, ch:C.wchar.wchar_t, stream:ptr[FILE]):C.wchar.wint_t {.
+proc fputwc*(typ:type C, ch:C.wchar_t, stream:ptr[FILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc putwc*(typ:type C.wchar, ch:C.wchar.wchar_t, stream:ptr[FILE]):C.wchar.wint_t {.
+proc putwc*(typ:type C, ch:C.wchar_t, stream:ptr[FILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc fputws*(typ:type C.wchar, str:ptr[C.wchar.wchar_t], stream:ptr[FILE]):int {.
+proc fputws*(typ:type C, str:ptr[C.wchar_t], stream:ptr[FILE]):int {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc getwchar*(typ:type C.wchar):C.wchar.wint_t {.
+proc getwchar*(typ:type C):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc putwchar*(typ:type C.wchar, ch:C.wchar.wchar_t):C.wchar.wint_t {.
+proc putwchar*(typ:type C, ch:C.wchar_t):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc ungetwc*(typ:type C.wchar, ch:C.wchar.wint_t, stream:ptr[FILE]):C.wchar.wint_t {.
+proc ungetwc*(typ:type C, ch:C.wint_t, stream:ptr[FILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
@@ -105,21 +105,21 @@ proc ungetwc*(typ:type C.wchar, ch:C.wchar.wint_t, stream:ptr[FILE]):C.wchar.win
 # Formatted input/output functions
 #
 
-proc wscanf*(typ:type C.wchar, format:ptr[C.wchar.wchar_t]):int {.
+proc wscanf*(typ:type C, format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc fwscanf*(typ:type C.wchar, stream:ptr[FILE], format:ptr[C.wchar.wchar_t]):int {.
+proc fwscanf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc swscanf*(typ:type C.wchar, buffer:pointer, format:ptr[C.wchar.wchar_t]):int {.
+proc swscanf*(typ:type C, buffer:pointer, format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
@@ -132,21 +132,21 @@ proc swscanf*(typ:type C.wchar, buffer:pointer, format:ptr[C.wchar.wchar_t]):int
 # - vfscanf()
 # - vsscanf()
 
-proc wprintf*(typ:type C.wchar, format:ptr[C.wchar.wchar_t]):int {.
+proc wprintf*(typ:type C, format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc fwprintf*(typ:type C.wchar, stream:ptr[FILE], format:ptr[C.wchar.wchar_t]):int {.
+proc fwprintf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc swprintf*(typ:type C.wchar, buffer:pointer, bufsz:csize, format:ptr[C.wchar.wchar_t]):int {.
+proc swprintf*(typ:type C, buffer:pointer, bufsz:csize, format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,

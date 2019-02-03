@@ -2,6 +2,8 @@
 
 import cstdlib/[
   stdio,
+  wchar,
 ]
 
 export stdio
+export wchar
