@@ -230,6 +230,11 @@ proc main =
     C.remove("remove.tmp")
 
   block:
+    var a = C.fopen("main.nim", "r")
+    C.clearerr(a)
+    C.fclose(a)
+
+  block:
     var a = C.tmpfile()
     C.fclose(a)
 

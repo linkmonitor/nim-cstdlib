@@ -304,7 +304,10 @@ proc rewind*(typ:type C, stream:ptr[C.CFILE]) {.
 # Error handling functions
 #
 
-# TODO: Add requisite files
+proc clearerr*(typ:type C, stream:ptr[C.CFILE]) {.
+  importc,
+  header:"<stdio.h>",
+  .}
 
 #
 # Functions that perform opeations on files
