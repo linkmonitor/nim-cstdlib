@@ -47,7 +47,7 @@ proc getwc*(typ:type C, stream:ptr[C.CFILE]):C.wint_t {.
   .}
 
 
-proc fgetws*[T](typ:type C, str:ptr[T], count:int, stream:ptr[C.CFILE]):ptr[T] {.
+proc fgetws*[T](typ:type C, str:ptr[T], count:cint, stream:ptr[C.CFILE]):ptr[T] {.
   importc,
   header:"<wchar.h>",
   discardable,
@@ -65,7 +65,7 @@ proc putwc*(typ:type C, ch:C.wchar_t, stream:ptr[C.CFILE]):C.wint_t {.
   discardable,
   .}
 
-proc fputws*(typ:type C, str:ptr[C.wchar_t], stream:ptr[C.CFILE]):int {.
+proc fputws*(typ:type C, str:ptr[C.wchar_t], stream:ptr[C.CFILE]):cint {.
   importc,
   header:"<wchar.h>",
   discardable,
@@ -93,21 +93,21 @@ proc ungetwc*(typ:type C, ch:C.wint_t, stream:ptr[C.CFILE]):C.wint_t {.
 # Formatted input/output functions
 #
 
-proc wscanf*(typ:type C, format:ptr[C.wchar_t]):int {.
+proc wscanf*(typ:type C, format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc fwscanf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):int {.
+proc fwscanf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc swscanf*[T](typ:type C, buffer:ptr[T], format:ptr[C.wchar_t]):int {.
+proc swscanf*[T](typ:type C, buffer:ptr[T], format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
@@ -120,21 +120,21 @@ proc swscanf*[T](typ:type C, buffer:ptr[T], format:ptr[C.wchar_t]):int {.
 # - vfscanf()
 # - vsscanf()
 
-proc wprintf*(typ:type C, format:ptr[C.wchar_t]):int {.
+proc wprintf*(typ:type C, format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc fwprintf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):int {.
+proc fwprintf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
   discardable,
   .}
 
-proc swprintf*[T](typ:type C, buffer:ptr[T], bufsz:csize, format:ptr[C.wchar_t]):int {.
+proc swprintf*[T](typ:type C, buffer:ptr[T], bufsz:csize, format:ptr[C.wchar_t]):cint {.
   importc,
   header:"<wchar.h>",
   varargs,
