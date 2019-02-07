@@ -3,10 +3,6 @@ import stdio
 import core
 export core
 
-# TODO: This is an aggressive way to make WideCString available.
-import system
-export system
-
 #
 # Local type aliases
 #
