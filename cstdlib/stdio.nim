@@ -11,7 +11,9 @@ converter toInt*(n:char):int {.inline.} =
 type
   FILE_private {.importc:"FILE", header:"<stdio.h>".} = object
 
-template FILE*(typ:type C):typedesc =
+template CFILE*(typ:type C):typedesc =
+  ## C's `FILE` type. Unable to use `FILE` because it conflicts with
+  ## `system.FILE`.
   FILE_private
 
 #
@@ -54,41 +56,41 @@ template IONBF*(typ:type C):auto =
 # File access functions
 #
 
-proc fopen*(typ:type C, filename:cstring, mode:cstring):ptr[C.FILE] {.
+proc fopen*(typ:type C, filename:cstring, mode:cstring):ptr[C.CFILE] {.
   importc,
   header:"<stdio.h>",
   .}
 
-proc freopen*(typ:type C, filename:cstring, mode:cstring, stream:ptr[C.FILE]):ptr[C.FILE] {.
+proc freopen*(typ:type C, filename:cstring, mode:cstring, stream:ptr[C.CFILE]):ptr[C.CFILE] {.
   importc,
   header:"<stdio.h>",
   .}
 
-proc fflush*(typ:type C, stream:ptr[C.FILE]):int {.
-  importc,
-  header:"<stdio.h>",
-  discardable,
-  .}
-
-
-proc fclose*(typ:type C, stream:ptr[C.FILE]):int {.
+proc fflush*(typ:type C, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc setbuf*(typ:type C, stream:ptr[C.FILE], buffer:ptr[char]) {.
+
+proc fclose*(typ:type C, stream:ptr[C.CFILE]):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc setbuf*(typ:type C, stream:ptr[C.CFILE], buffer:ptr[char]) {.
   importc,
   header:"<stdio.h>"
   .}
 
-proc setvbuf*(typ:type C, stream:ptr[C.FILE], buffer:ptr[char], mode:int, size:csize):int {.
+proc setvbuf*(typ:type C, stream:ptr[C.CFILE], buffer:ptr[char], mode:int, size:csize):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fwide*(typ:type C, stream:ptr[C.FILE], mode:int):int {.
+proc fwide*(typ:type C, stream:ptr[C.CFILE], mode:int):int {.
   importc,
   header:"<stdio.h>",
   discardable,
@@ -98,13 +100,13 @@ proc fwide*(typ:type C, stream:ptr[C.FILE], mode:int):int {.
 # Direct input/output functions
 #
 
-proc fread*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.FILE]):csize {.
+proc fread*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.CFILE]):csize {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fwrite*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.FILE]):csize {.
+proc fwrite*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.CFILE]):csize {.
   importc,
   header:"<stdio.h>",
   discardable,
@@ -114,37 +116,37 @@ proc fwrite*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C
 # Unformatted input/output functions
 #
 
-proc fgetc*(typ:type C, stream:ptr[C.FILE]):int {.
+proc fgetc*(typ:type C, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc getc*(typ:type C, stream:ptr[C.FILE]):int {.
+proc getc*(typ:type C, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fgets*[T](typ:type C, str:ptr[T], count:int, stream:ptr[C.FILE]):ptr[T] {.
+proc fgets*[T](typ:type C, str:ptr[T], count:int, stream:ptr[C.CFILE]):ptr[T] {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fputc*(typ:type C, ch:int, stream:ptr[C.FILE]):int {.
+proc fputc*(typ:type C, ch:int, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc putc*(typ:type C, ch:int, stream:ptr[C.FILE]):int {.
+proc putc*(typ:type C, ch:int, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fputs*(typ:type C, str:cstring, stream:ptr[C.FILE]):int {.
+proc fputs*(typ:type C, str:cstring, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
@@ -168,7 +170,7 @@ proc puts*(typ:type C, st:cstring):int {.
   discardable,
   .}
 
-proc ungetc*(typ:type C, ch:int, stream:ptr[C.FILE]):int {.
+proc ungetc*(typ:type C, ch:int, stream:ptr[C.CFILE]):int {.
   importc,
   header:"<stdio.h>",
   discardable,
@@ -185,7 +187,7 @@ proc scanf*(typ:type C, format:cstring):int {.
   discardable,
   .}
 
-proc fscanf*(typ:type C, stream:ptr[C.FILE], format:cstring):int {.
+proc fscanf*(typ:type C, stream:ptr[C.CFILE], format:cstring):int {.
   importc,
   header:"<stdio.h>",
   varargs,
@@ -212,7 +214,7 @@ proc printf*(typ:type C, format:cstring):int {.
   varargs,
   .}
 
-proc fprintf*(typ:type C, stream:ptr[C.FILE], format:cstring):int {.
+proc fprintf*(typ:type C, stream:ptr[C.CFILE], format:cstring):int {.
   importc,
   header:"<stdio.h>",
   discardable,

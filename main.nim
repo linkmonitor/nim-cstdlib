@@ -22,7 +22,7 @@ proc main =
     C.fclose(b)
 
   block:
-    var c:ptr[C.FILE]
+    var c:ptr[C.CFILE]
     discard c
 
   block:

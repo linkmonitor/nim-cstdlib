@@ -1,15 +1,7 @@
-import stdio
-
 import core
 export core
 
-#
-# Local type aliases
-#
-
-type
-  FILE = stdio.FILE(C)
-    ## TODO: Find a way to avoid this.
+import stdio
 
 #
 # Types
@@ -42,38 +34,38 @@ converter toWchar*(n:char):C.wchar_t{.inline.} =
 # Unformatted input/output functions
 #
 
-proc fgetwc*(typ:type C, stream:ptr[FILE]):C.wint_t {.
+proc fgetwc*(typ:type C, stream:ptr[C.CFILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc getwc*(typ:type C, stream:ptr[FILE]):C.wint_t {.
+proc getwc*(typ:type C, stream:ptr[C.CFILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
 
-proc fgetws*[T](typ:type C, str:ptr[T], count:int, stream:ptr[FILE]):ptr[T] {.
+proc fgetws*[T](typ:type C, str:ptr[T], count:int, stream:ptr[C.CFILE]):ptr[T] {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc fputwc*(typ:type C, ch:C.wchar_t, stream:ptr[FILE]):C.wint_t {.
+proc fputwc*(typ:type C, ch:C.wchar_t, stream:ptr[C.CFILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc putwc*(typ:type C, ch:C.wchar_t, stream:ptr[FILE]):C.wint_t {.
+proc putwc*(typ:type C, ch:C.wchar_t, stream:ptr[C.CFILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
   .}
 
-proc fputws*(typ:type C, str:ptr[C.wchar_t], stream:ptr[FILE]):int {.
+proc fputws*(typ:type C, str:ptr[C.wchar_t], stream:ptr[C.CFILE]):int {.
   importc,
   header:"<wchar.h>",
   discardable,
@@ -91,7 +83,7 @@ proc putwchar*(typ:type C, ch:C.wchar_t):C.wint_t {.
   discardable,
   .}
 
-proc ungetwc*(typ:type C, ch:C.wint_t, stream:ptr[FILE]):C.wint_t {.
+proc ungetwc*(typ:type C, ch:C.wint_t, stream:ptr[C.CFILE]):C.wint_t {.
   importc,
   header:"<wchar.h>",
   discardable,
@@ -108,7 +100,7 @@ proc wscanf*(typ:type C, format:ptr[C.wchar_t]):int {.
   discardable,
   .}
 
-proc fwscanf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
+proc fwscanf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
@@ -135,7 +127,7 @@ proc wprintf*(typ:type C, format:ptr[C.wchar_t]):int {.
   discardable,
   .}
 
-proc fwprintf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
+proc fwprintf*(typ:type C, stream:ptr[C.CFILE], format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
