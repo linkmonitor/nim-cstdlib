@@ -10,11 +10,15 @@ converter toInt*(n:char):cint {.inline.} =
 
 type
   FILE_private {.importc:"FILE", header:"<stdio.h>".} = object
+  fpos_t_private {.importc:"fpos_t", header:"<stdio.h>".} = object
 
 template CFILE*(typ:type C):typedesc =
   ## C's `FILE` type. Unable to use `FILE` because it conflicts with
   ## `system.FILE`.
   FILE_private
+
+template fpos_t*(typ:type C):typedesc =
+  fpos_t_private
 
 #
 # Variables and defines
@@ -51,6 +55,30 @@ template IONBF*(typ:type C):auto =
     header:"<stdio.h>",
     .}:cint
   ionbf
+
+template SEEK_SET*(typ:type C):auto =
+  var seek_set {.
+    global,
+    importc:"SEEK_SET",
+    header:"<stdio.h>",
+    .}:cint
+  seek_set
+
+template SEEK_CUR*(typ:type C):auto =
+  var seek_cur {.
+    global,
+    importc:"SEEK_CUR",
+    header:"<stdio.h>",
+    .}:cint
+  seek_cur
+
+template SEEK_END*(typ:type C):auto =
+  var seek_end {.
+    global,
+    importc:"SEEK_END",
+    header:"<stdio.h>",
+    .}:cint
+  seek_end
 
 #
 # File access functions
@@ -239,3 +267,64 @@ proc perror*(typ:type C, s:cstring) {.
   header:"<stdio.h>",
   varargs,
   .}
+
+#
+# File positioning functions
+#
+
+proc ftell*(typ:type C, stream:ptr[C.CFILE]):clong {.
+  importc,
+  header:"<stdio.h>",
+  .}
+
+proc fseek*(typ:type C, stream:ptr[C.CFILE], offset:clong, origin:cint):int {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fgetpos*(typ:type C, stream:ptr[C.CFILE], pos:ptr[C.fpos_t]):cint {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc fsetpos*(typ:type C, stream:ptr[C.CFILE], pos:ptr[C.fpos_t]):cint {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc rewind*(typ:type C, stream:ptr[C.CFILE]) {.
+  importc,
+  header:"<stdio.h>",
+  .}
+
+#
+# Error handling functions
+#
+
+# TODO: Add requisite files
+
+#
+# Functions that perform opeations on files
+#
+
+proc remove*(typ:type C, fname:cstring):cint {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc rename*(typ:type C, old_filename:cstring, new_filename:cstring):cint {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}
+
+proc tmpfile*(typ:type C):ptr[C.CFILE] {.
+  importc,
+  header:"<stdio.h>",
+  .}
+
+# TODO: Add tmpnam()

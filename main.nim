@@ -202,4 +202,35 @@ proc main =
   block:
     C.perror("Hello from perror()")
 
+  block:
+    var a = C.fopen("main.nim", "rb")
+    var b = C.ftell(a)
+    C.printf("ftell() returned %ld\n", b)
+    C.fclose(a)
+
+  block:
+    var a = C.fopen("main.nim", "r")
+    C.fseek(a, 0, C.SEEK_SET)
+    C.fseek(a, 0, C.SEEK_CUR)
+    C.fseek(a, 0, C.SEEK_END)
+    C.fclose(a)
+
+  block:
+    var a = C.fopen("main.nim", "r")
+    var b:C.fpos_t
+    C.fgetpos(a, addr(b))
+    C.fsetpos(a, addr(b))
+    C.rewind(a)
+    C.fclose(a)
+
+  block:
+    var a = C.fopen("remove.tmp.tmp", "w+")
+    C.fclose(a)
+    C.rename("remove.tmp.tmp", "remove.tmp")
+    C.remove("remove.tmp")
+
+  block:
+    var a = C.tmpfile()
+    C.fclose(a)
+
 main()
