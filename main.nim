@@ -6,6 +6,7 @@ import system
 import cstdlib/[
   stdio,
   wchar,
+  quirk,
 ]
 
 proc main =
@@ -27,13 +28,13 @@ proc main =
   block:
     var a = C.fopen("main.nim", "r")
     var b:array[3,int]
-    C.fread(addr(b[0]), sizeof(int), len(b), a)
+    C.fread(b, sizeof(int), len(b), a)
     C.fclose(a)
 
   block:
     var a = C.fopen("fwrite.tmp", "w+")
     var b:array[3,int] = [1,2,3]
-    C.fwrite(addr(b[0]), sizeof(int), len(b), a)
+    C.fwrite(b, sizeof(int), len(b), a)
     C.fclose(a)
 
   block:
@@ -137,7 +138,7 @@ proc main =
       format[0] = '%'
       format[1] = 'd'
       format[2] = '\0'
-      C.wscanf(format, addr(a))
+      C.wscanf(format, a)
       C.printf("You entered: %d\n", a)
 
   block:
@@ -163,7 +164,7 @@ proc main =
     format[2] = '\0'
     var c:int
     # TODO: Make `swscanf()` accept `wchar_t` buffers.
-    C.swscanf(addr(a), format, addr(c))
+    C.swscanf(a, format, addr(c))
     C.printf("swcanf() read %d\n", c)
 
   block:
@@ -183,7 +184,7 @@ proc main =
   block:
     var a:array[5, C.wchar_t]
     var format:array[3, C.wchar_t] = [toWchar('%'), 'd', '\0']
-    C.swprintf(addr(a), len(a), format, 135)
+    C.swprintf(a, len(a), format, 135)
     a[3] = '\n'
     a[4] = '\0'
     C.wprintf(a)
@@ -195,7 +196,7 @@ proc main =
 
   block:
     var a:array[100, char]
-    C.sprintf(addr(a), "%d", 987)
+    C.sprintf(a, "%d", 987)
     C.printf("%c%c%c\n", a[0], a[1], a[2])
 
   block:

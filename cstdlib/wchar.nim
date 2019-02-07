@@ -119,7 +119,7 @@ proc fwscanf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
   discardable,
   .}
 
-proc swscanf*(typ:type C, buffer:pointer, format:ptr[C.wchar_t]):int {.
+proc swscanf*[T](typ:type C, buffer:ptr[T], format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,
@@ -146,7 +146,7 @@ proc fwprintf*(typ:type C, stream:ptr[FILE], format:ptr[C.wchar_t]):int {.
   discardable,
   .}
 
-proc swprintf*(typ:type C, buffer:pointer, bufsz:csize, format:ptr[C.wchar_t]):int {.
+proc swprintf*[T](typ:type C, buffer:ptr[T], bufsz:csize, format:ptr[C.wchar_t]):int {.
   importc,
   header:"<wchar.h>",
   varargs,

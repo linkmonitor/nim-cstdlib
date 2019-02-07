@@ -1,9 +1,6 @@
 import core
 export core
 
-converter toPointer*[N,T](arr:array[N,T]):ptr[T] {.inline.} =
-  cast[ptr[T]](unsafeAddr(arr[0]))
-
 converter toInt*(n:char):int {.inline.} =
   result = cast[int](n)
 
@@ -101,13 +98,13 @@ proc fwide*(typ:type C, stream:ptr[C.FILE], mode:int):int {.
 # Direct input/output functions
 #
 
-proc fread*(typ:type C, buffer:pointer, size:csize, count:csize, stream:ptr[C.FILE]):csize {.
+proc fread*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.FILE]):csize {.
   importc,
   header:"<stdio.h>",
   discardable,
   .}
 
-proc fwrite*(typ:type C, buffer:pointer, size:csize, count:csize, stream:ptr[C.FILE]):csize {.
+proc fwrite*[T](typ:type C, buffer:ptr[T], size:csize, count:csize, stream:ptr[C.FILE]):csize {.
   importc,
   header:"<stdio.h>",
   discardable,
@@ -222,7 +219,7 @@ proc fprintf*(typ:type C, stream:ptr[C.FILE], format:cstring):int {.
   varargs,
   .}
 
-proc sprintf*(typ:type C, buffer:pointer, format:cstring):int {.
+proc sprintf*[T](typ:type C, buffer:ptr[T], format:cstring):int {.
   importc,
   header:"<stdio.h>",
   discardable,
