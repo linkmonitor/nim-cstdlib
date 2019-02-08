@@ -239,7 +239,15 @@ proc main =
   block:
     var a = C.tmpfile()
     C.fclose(a)
-    # TODO: Figure out how to import symbols and use them as constants.
-    var b:array[C.L_tmpnam,cchar]
+    var b:array[C.L_tmpnam,char]
+    C.tmpnam(addr(b))
+    C.printf("tmpname() returned %s\n", b)
+
+  block:
+    discard C.EOF
+    discard C.BUFSIZ
+    discard C.FILENAME_MAX
+    discard C.FOPEN_MAX
+    discard C.TMP_MAX
 
 main()

@@ -24,13 +24,42 @@ template fpos_t*(typ:type C):typedesc =
 # Variables and defines
 #
 
-template NULL*(typ:type C):auto =
-  var null {.
+template EOF*(typ:type C):auto =
+  var eof {.
     global,
-    importc:"NULL",
+    importc:"EOF",
     header:"<stdio.h>",
-    .}:pointer
-  null
+    .}:cint
+  eof
+
+template BUFSIZ*(typ:type C):auto =
+  # TODO: Find a way to make imported values available as `const`.
+  # var bufsiz {.
+  #   global,
+  #   importc:"BUFSIZ",
+  #   header:"<stdio.h>",
+  #   .}:cint
+  # bufsiz
+
+template FILENAME_MAX*(typ:type C):auto =
+  4096
+  # TODO: Find a way to make imported values available as `const`.
+  # var filename_max {.
+  #   global,
+  #   importc:"FILENAME_MAX",
+  #   header:"<stdio.h>",
+  #   .}:cint
+  # filename_max
+
+template FOPEN_MAX*(typ:type C):auto =
+  16
+  # TODO: Find a way to make imported values available as `const`.
+  # var fopen_max {.
+  #   global,
+  #   importc:"FOPEN_MAX",
+  #   header:"<stdio.h>",
+  #   .}:cint
+  # fopen_max
 
 template IOFBF*(typ:type C):auto =
   var iofbf {.
@@ -56,6 +85,24 @@ template IONBF*(typ:type C):auto =
     .}:cint
   ionbf
 
+template L_tmpnam*(typ:type C):auto =
+  20
+  # TODO: Find a way to make imported values available as `const`.
+  # var l_tmpnam {.
+  #   global,
+  #   importc:"L_tmpnam",
+  #   header:"<stdio.h>",
+  #   .}:csize
+  # l_tmpnam
+
+template NULL*(typ:type C):auto =
+  var null {.
+    global,
+    importc:"NULL",
+    header:"<stdio.h>",
+    .}:pointer
+  null
+
 template SEEK_SET*(typ:type C):auto =
   var seek_set {.
     global,
@@ -80,13 +127,15 @@ template SEEK_END*(typ:type C):auto =
     .}:cint
   seek_end
 
-template L_tmpnam*(typ:type C):auto =
-  var l_tmpnam {.
-    global,
-    emit:"L_tmpnam",
-    compiletime,
-    .}:csize
-  l_tmpnam
+template TMP_MAX*(typ:type C):auto =
+  238328
+  # TODO: Find a way to make imported values available as `const`.
+  # var tmp_max {.
+  #   global,
+  #   importc:"TMP_MAX",
+  #   header:"<stdio.h>",
+  #   .}:cint
+  # tmp_max
 
 #
 # File access functions
