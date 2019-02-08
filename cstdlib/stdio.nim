@@ -80,6 +80,14 @@ template SEEK_END*(typ:type C):auto =
     .}:cint
   seek_end
 
+template L_tmpnam*(typ:type C):auto =
+  var l_tmpnam {.
+    global,
+    emit:"L_tmpnam",
+    compiletime,
+    .}:csize
+  l_tmpnam
+
 #
 # File access functions
 #
@@ -309,6 +317,16 @@ proc clearerr*(typ:type C, stream:ptr[C.CFILE]) {.
   header:"<stdio.h>",
   .}
 
+proc feof*(typ:type C, stream:ptr[C.CFILE]):cint {.
+  importc,
+  header:"<stdio.h>",
+  .}
+
+proc ferror*(typ:type C, stream:ptr[C.CFILE]):cint {.
+  importc,
+  header:"<stdio.h>",
+  .}
+
 #
 # Functions that perform opeations on files
 #
@@ -330,4 +348,8 @@ proc tmpfile*(typ:type C):ptr[C.CFILE] {.
   header:"<stdio.h>",
   .}
 
-# TODO: Add tmpnam()
+proc tmpnam*(typ:type C, filename:cstring):cstring {.
+  importc,
+  header:"<stdio.h>",
+  discardable,
+  .}

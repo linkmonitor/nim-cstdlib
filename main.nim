@@ -232,10 +232,14 @@ proc main =
   block:
     var a = C.fopen("main.nim", "r")
     C.clearerr(a)
+    discard C.feof(a)
+    discard C.ferror(a)
     C.fclose(a)
 
   block:
     var a = C.tmpfile()
     C.fclose(a)
+    # TODO: Figure out how to import symbols and use them as constants.
+    var b:array[C.L_tmpnam,cchar]
 
 main()
