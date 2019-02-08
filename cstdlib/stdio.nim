@@ -33,6 +33,7 @@ template EOF*(typ:type C):auto =
   eof
 
 template BUFSIZ*(typ:type C):auto =
+  8192
   # TODO: Find a way to make imported values available as `const`.
   # var bufsiz {.
   #   global,
