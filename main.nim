@@ -5,11 +5,17 @@ import system
 # NOTE: Can import everything at once with `import cstdlib`.
 import cstdlib/[
   stdio,
+  stdlib,
   wchar,
   quirk,
 ]
 
 proc main =
+
+  #
+  # sdtio and wchar
+  #
+
   block:
     var a = C.fopen("main.nim", "r")
     var b = C.freopen("main.nim", "r", a)
@@ -249,5 +255,26 @@ proc main =
     discard C.FILENAME_MAX
     discard C.FOPEN_MAX
     discard C.TMP_MAX
+
+  #
+  # stdlib
+  #
+
+  block:
+    var a = C.atof("1.23")
+    C.printf("atof() returned %f\n", a)
+    var b = C.atoi("1")
+    C.printf("atoi() returned %d\n", b)
+    var c = C.atol("2")
+    C.printf("atol() returned %ld\n", c)
+    var d = C.atoll("3")
+    C.printf("atoll() returned %lld\n", d)
+    var e:cstring
+    var f = C.strtod("3.21", addr(e))
+    C.printf("strtod() returned %f\n", f, e)
+    var g = C.strtof("1.11", addr(e))
+    C.printf("strtof() returned %f\n", g)
+    var h = C.strtol("123", addr(e), 10)
+    C.printf("strtol() returned %ld\n", h)
 
 main()
