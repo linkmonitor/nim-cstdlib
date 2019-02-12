@@ -276,5 +276,20 @@ proc main =
     C.printf("strtof() returned %f\n", g)
     var h = C.strtol("123", addr(e), 10)
     C.printf("strtol() returned %ld\n", h)
+    var i = C.strtold("1.234", addr(e))
+    C.printf("strtold() returned %lf\n", i)
+    var j = C.strtoll("1234", addr(e), 10)
+    C.printf("strtoll() returned %lld\n", j)
+    var k = C.strtoul("1234", addr(e), 10)
+    C.printf("strtoul() returned %lld\n", k)
+    var l = C.strtoull("1234", addr(e), 10)
+    C.printf("strtoull() returned %lld\n", l)
+
+  block:
+    C.printf("RAND_MAX=%d\n", C.RAND_MAX)
+    C.srand(0)
+    C.printf("rand() returns %d\n", C.rand())
+    C.srand(high(cuint))
+    C.printf("rand() returns %d\n", C.rand())
 
 main()

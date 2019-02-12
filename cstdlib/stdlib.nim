@@ -2,6 +2,18 @@ import core
 export core
 
 #
+# Variables and defines
+#
+
+template RAND_MAX*(typ:type C):auto =
+  var rand_max {.
+    global,
+    importc:"RAND_MAX",
+    header:"<stdlib.h>",
+    .}:cint
+  rand_max
+
+#
 # Type conversion functions
 #
 
@@ -39,3 +51,43 @@ proc strtol*(typ:type C, str:cstring, endptr:ptr[cstring], base:cint):clong {.
   importc,
   header:"<stdlib.h>",
   .}
+
+proc strtold*(typ:type C, std:cstring, endptr:ptr[cstring]):clongdouble {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc strtoll*(typ:type C, std:cstring, endptr:ptr[cstring], base:cint):clonglong {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc strtoul*(typ:type C, std:cstring, endptr:ptr[cstring], base:cint):culong {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc strtoull*(typ:type C, std:cstring, endptr:ptr[cstring], base:cint):culonglong {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+#
+# Random functions
+#
+
+proc rand*(typ:type C):cint {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc srand*(typ:type C, seed:cuint) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+#
+# Dynamic memory management
+#
+
+# TODO: Continue here.
