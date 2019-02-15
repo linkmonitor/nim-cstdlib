@@ -90,4 +90,8 @@ proc srand*(typ:type C, seed:cuint) {.
 # Dynamic memory management
 #
 
+proc calloc*(typ:type C, num:csize, size:csize):ptr[cchar] {.
+  importc,
+  header:"<stdlib.h>",
+  .}
 # TODO: Continue here.

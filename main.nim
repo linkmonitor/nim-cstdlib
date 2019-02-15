@@ -292,4 +292,7 @@ proc main =
     C.srand(high(cuint))
     C.printf("rand() returns %d\n", C.rand())
 
+  block:
+    discard C.calloc(sizeof(cint), 1)
+
 main()
