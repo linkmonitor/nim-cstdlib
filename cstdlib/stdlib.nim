@@ -2,8 +2,54 @@ import core
 export core
 
 #
+# Types
+#
+
+type
+  div_t_private {.importc:"div_t", header:"<stdlib.h>".} = object
+  ldiv_t_private {.importc:"ldiv_t", header:"<stdlib.h>".} = object
+  lldiv_t_private {.importc:"lldiv_t", header:"<stdlib.h>".} = object
+  size_t_private {.importc:"size_t", header:"<stdlib.h>".} = object
+
+template div_t*(typ:type C):typedesc =
+  div_t_private
+
+template ldiv_t*(typ:type C):typedesc =
+  ldiv_t_private
+
+template lldiv_t*(typ:type C):typedesc =
+  lldiv_t_private
+
+template size_t*(typ:type C):typedesc =
+  size_t_private
+
+#
 # Variables and defines
 #
+
+template EXIT_FAILURE*(typ:type C):auto =
+  var exit_failure {.
+    global,
+    importc:"EXIT_FAILURE",
+    header:"<stdlib.h>",
+    .}:cint
+  exit_failure
+
+template EXIT_SUCCESS*(typ:type C):auto =
+  var exit_success {.
+    global,
+    importc:"EXIT_SUCCESS",
+    header:"<stdlib.h>",
+    .}:cint
+  exit_success
+
+template MB_CUR_MAX*(typ:type C):auto =
+  var mb_cur_max {.
+    global,
+    importc:"MB_CUR_MAX",
+    header:"<stdlib.h>",
+    .}:cint
+  mb_cur_max
 
 template RAND_MAX*(typ:type C):auto =
   var rand_max {.
@@ -109,3 +155,20 @@ proc realloc*[T](typ:type C, p:ptr[T], size:csize):ptr[T] {.
   importc,
   header:"<stdlib.h>",
   .}
+
+#
+# Environment functions
+#
+
+proc abort*(typ:type C) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc atexit*(typ:type C, fn:proc):cint {.
+  importc,
+  header:"<stdlib.h>",
+  discardable,
+.}
+
+# TODO(jjaoudi): Finish the rest of the environment functions.

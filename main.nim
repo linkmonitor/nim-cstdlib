@@ -299,4 +299,28 @@ proc main =
     var c = C.realloc(b, 2)
     C.free(c)
 
+  block:
+    var a:C.div_t
+    discard a
+    var b:C.ldiv_t
+    discard b
+    var c:C.lldiv_t
+    discard c
+    var d:C.size_t
+    discard d
+    discard C.EXIT_FAILURE
+    discard C.EXIT_SUCCESS
+    discard C.MB_CUR_MAX
+    discard C.RAND_MAX
+
+  block:
+    when defined(abort):
+      C.abort()
+
+  block:
+    proc greet_exit() =
+      C.printf("That's all folks\n")
+    C.atexit(greet_exit)
+    C.printf("Should expect a closing line\n")
+
 main()
