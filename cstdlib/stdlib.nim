@@ -94,4 +94,18 @@ proc calloc*(typ:type C, num:csize, size:csize):ptr[cchar] {.
   importc,
   header:"<stdlib.h>",
   .}
-# TODO: Continue here.
+
+proc free*[T](typ:type C, p:ptr[T]) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc malloc*(typ:type C, size:csize):ptr[cchar] {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc realloc*[T](typ:type C, p:ptr[T], size:csize):ptr[T] {.
+  importc,
+  header:"<stdlib.h>",
+  .}

@@ -293,6 +293,10 @@ proc main =
     C.printf("rand() returns %d\n", C.rand())
 
   block:
-    discard C.calloc(sizeof(cint), 1)
+    var a = C.calloc(sizeof(cint), 1)
+    C.free(a)
+    var b = C.malloc(1)
+    var c = C.realloc(b, 2)
+    C.free(c)
 
 main()
