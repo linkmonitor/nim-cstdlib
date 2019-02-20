@@ -323,4 +323,7 @@ proc main =
     C.atexit(greet_exit)
     C.printf("Should expect a closing line\n")
 
+  # TODO(jjaoudi):
+  # - [ ] Add the `incompleteStruct` pragma to type declarations.
+
 main()
