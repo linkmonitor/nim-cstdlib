@@ -321,7 +321,19 @@ proc main =
     proc greet_exit() =
       C.printf("That's all folks\n")
     C.atexit(greet_exit)
+    # proc greet_quit_exit() =
+    #   C.printf("That's all, quickly, folks\n")
+    # C.at_quit_exit(greet_quit_exit)
     C.printf("Should expect a closing line\n")
+    when defined(test_exit):
+      C.exit(C.EXIT_SUCCESS)
+    C.printf("PATH=%s\n", C.getenv("PATH"))
+    when defined(test_quick_exit):
+      C.quick_exit()
+    if C.system("true") == 0:
+      C.printf("System processor is available\n")
+    else:
+      C.printf("System processor is unavailable\n")
 
   # TODO(jjaoudi):
   # - [ ] Add the `incompleteStruct` pragma to type declarations.

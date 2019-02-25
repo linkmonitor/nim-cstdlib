@@ -169,6 +169,33 @@ proc atexit*(typ:type C, fn:proc):cint {.
   importc,
   header:"<stdlib.h>",
   discardable,
-.}
+  .}
+
+# NOTE: Doesn't work on my Mac laptop.
+# proc at_quit_exit*(typ:type C, fn:proc):cint {.
+#   importc,
+#   header:"<stdlib.h>",
+#   discardable,
+# .}
+
+proc exit*(typ:type C, status:cint) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc getenv*(typ:type C, name:cstring):cstring {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc quick_exit*(typ:type C, status:cint) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc system*(typ:type C, command:cstring):cint {.
+  importc,
+  header:"<stdlib.h>",
+  .}
 
 # TODO(jjaoudi): Finish the rest of the environment functions.
