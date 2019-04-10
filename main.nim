@@ -334,6 +334,9 @@ proc main =
       C.printf("System processor is available\n")
     else:
       C.printf("System processor is unavailable\n")
+    when defined(test_underscore_exit):
+      C.printf("Exiting via _Exit()\n")
+      C.underscore_exit(C.EXIT_SUCCESS)
 
   # TODO(jjaoudi):
   # - [ ] Add the `incompleteStruct` pragma to type declarations.

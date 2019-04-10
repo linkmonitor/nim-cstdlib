@@ -198,4 +198,7 @@ proc system*(typ:type C, command:cstring):cint {.
   header:"<stdlib.h>",
   .}
 
-# TODO(jjaoudi): Finish the rest of the environment functions.
+proc underscore_exit*(typ:type C, status:cint) {.
+  importc:"_Exit",
+  header:"<stdlib.h>",
+  .}
