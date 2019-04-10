@@ -202,3 +202,12 @@ proc underscore_exit*(typ:type C, status:cint) {.
   importc:"_Exit",
   header:"<stdlib.h>",
   .}
+
+#
+# Searching and sorting
+#
+
+proc bsearch*[T](typ:type C, key:ptr[T], base:ptr[T], num:csize, size:csize, compar:proc):ptr[T] {.
+  importc,
+  header:"<stdlib.h>",
+  .}

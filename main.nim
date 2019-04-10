@@ -338,6 +338,18 @@ proc main =
       C.printf("Exiting via _Exit()\n")
       C.underscore_exit(C.EXIT_SUCCESS)
 
+  block:
+    proc compar(key:ptr[int], elem:ptr[int]):int =
+      if elem[] < key[]: return -1
+      if elem[] > key[]: return 1
+      return 0
+    let haystack = [1,2,3,4,5]
+    let needle = 3
+    let result = C.bsearch(
+      unsafeAddr(needle), unsafeAddr(haystack[0]),
+      len(haystack), sizeof(haystack[0]), compar)
+    C.printf("Search found %d\n", result[])
+
   # TODO(jjaoudi):
   # - [ ] Add the `incompleteStruct` pragma to type declarations.
 
