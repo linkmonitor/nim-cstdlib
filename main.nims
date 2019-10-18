@@ -4,6 +4,7 @@
 --os:standalone
 --define:noSignalHandler
 --define:release
+--define:danger
 --passC:"-fdata-sections"
 --passC:"-ffunction-sections"
 --passC:"-flto"
