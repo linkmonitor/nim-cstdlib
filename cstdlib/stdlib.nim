@@ -211,3 +211,8 @@ proc bsearch*[T](typ:type C, key:ptr[T], base:ptr[T], num:csize, size:csize, com
   importc,
   header:"<stdlib.h>",
   .}
+
+proc qsort*[T](typ:type C, base:ptr[T], num:csize, size:csize, compar:proc) {.
+  importc,
+  header:"<stdlib.h>",
+  .}

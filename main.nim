@@ -349,6 +349,15 @@ proc main =
       unsafeAddr(needle), unsafeAddr(haystack[0]),
       len(haystack), sizeof(haystack[0]), compar)
     C.printf("Search found %d\n", result[])
+  block:
+    proc compar(a, b:ptr[int]):int =
+      if a[] < b[]: return -1
+      if a[] > b[]: return +1
+      return 0
+    var arr = [1, 4, 3, 2]
+    let expected = [1, 2, 3 , 4]
+    C.qsort(addr(arr), len(arr), sizeof(arr[0]), compar)
+    C.printf("Sorted:%d\n", arr == expected)
 
   # TODO(jjaoudi):
   # - [ ] Add the `incompleteStruct` pragma to type declarations.
