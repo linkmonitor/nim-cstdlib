@@ -359,6 +359,29 @@ proc main =
     C.qsort(addr(arr), len(arr), sizeof(arr[0]), compar)
     C.printf("Sorted:%d\n", arr == expected)
 
+  block:
+    C.printf("C.abs(1)=%d\n", C.abs(1))
+    C.printf("C.abs(-1)=%d\n", C.abs(-1))
+  block:
+    let two_by_one = C.div(2,1)
+    C.printf("C.div(2,1) quot=%d, rem=%d\n", two_by_one.quot, two_by_one.rem)
+    let four_by_three = C.div(4, 3)
+    C.printf("C.div(4,3) quot=%d, rem=%d\n", four_by_three, four_by_three)
+  block:
+    C.printf("C.labs(-43)=%ld\n", C.labs(-43))
+  block:
+    let two_by_one = C.ldiv(2,1)
+    C.printf("C.ldiv(2,1) quot=%d, rem=%d\n", two_by_one.quot, two_by_one.rem)
+    let four_by_three = C.ldiv(4, 3)
+    C.printf("C.ldiv(4,3) quot=%d, rem=%d\n", four_by_three, four_by_three)
+  block:
+    C.printf("C.llabs(-43)=%ld\n", C.llabs(-43))
+  block:
+    let two_by_one = C.lldiv(2,1)
+    C.printf("C.lldiv(2,1) quot=%d, rem=%d\n", two_by_one.quot, two_by_one.rem)
+    let four_by_three = C.lldiv(4, 3)
+    C.printf("C.lldiv(4,3) quot=%d, rem=%d\n", four_by_three, four_by_three)
+
   # TODO(jjaoudi):
   # - [ ] Add the `incompleteStruct` pragma to type declarations.
 

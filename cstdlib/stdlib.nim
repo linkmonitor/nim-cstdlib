@@ -7,8 +7,14 @@ export core
 
 type
   div_t_private {.importc:"div_t", header:"<stdlib.h>".} = object
+    quot*:cint
+    rem*:cint
   ldiv_t_private {.importc:"ldiv_t", header:"<stdlib.h>".} = object
+    quot*:clong
+    rem*:clong
   lldiv_t_private {.importc:"lldiv_t", header:"<stdlib.h>".} = object
+    quot*:clonglong
+    rem*:clonglong
   size_t_private {.importc:"size_t", header:"<stdlib.h>".} = object
 
 template div_t*(typ:type C):typedesc =
@@ -213,6 +219,40 @@ proc bsearch*[T](typ:type C, key:ptr[T], base:ptr[T], num:csize, size:csize, com
   .}
 
 proc qsort*[T](typ:type C, base:ptr[T], num:csize, size:csize, compar:proc) {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+#
+# Integer arithmetics
+#
+
+proc abs*(typ:type C, n:cint):cint {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc `div`*(typ:type C, numer:cint, denom:cint):C.div_t {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc labs*(typ:type C, n:clong):clong {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc ldiv*(typ:type C, numer:clong, denom:clong):C.ldiv_t {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc llabs*(typ:type C, n:clonglong):clonglong {.
+  importc,
+  header:"<stdlib.h>",
+  .}
+
+proc lldiv*(typ:type C, numer:clonglong, denom:clonglong):C.lldiv_t {.
   importc,
   header:"<stdlib.h>",
   .}
